@@ -23,6 +23,7 @@ spec :: Spec
 spec = describe "Servant.Foreign" $ do
   camelCaseSpec
   listFromAPISpec
+  listFromTransformedAPI
 
 camelCaseSpec :: Spec
 camelCaseSpec = describe "camelCase" $ do
@@ -53,6 +54,17 @@ type TestApi
 
 testApi :: [Req]
 testApi = listFromAPI (Proxy :: Proxy LangX) (Proxy :: Proxy TestApi)
+
+type TestApi2
+    = "test" :> (Get '[JSON] Int :<|> ReqBody '[JSON] String :> Post '[JSON] ())
+
+testApi2 :: [Req]
+testApi2 = listFromAPI (Proxy :: Proxy LangX) (Proxy :: Proxy TestApi2)
+
+listFromTransformedAPI :: Spec
+listFromTransformedAPI = describe "listFromAPI with transformed API" $ do
+    it "generates 4 endpoints for TestApi2" $ do
+        length testApi2 `shouldBe` 4
 
 listFromAPISpec :: Spec
 listFromAPISpec = describe "listFromAPI" $ do
