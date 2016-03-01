@@ -96,7 +96,8 @@ import           GHC.Generics                     (Generic)
 import qualified Network.HTTP.Media               as M
 import           Network.URI                      (escapeURIString,
                                                    isUnreserved, unEscapeString)
-import           Prelude.Compat                   ((<*), (*>))
+import           Prelude                          ()
+import           Prelude.Compat
 
 -- * Provided content types
 data JSON deriving Typeable
